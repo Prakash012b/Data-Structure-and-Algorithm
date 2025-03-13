@@ -13,7 +13,11 @@ public class BloodTestGUI extends javax.swing.JFrame {
     /**
      * Creates new form BloodTestGUI
      */
+    
+     private BloodTestQueueInterface myBloodTest;
+     
     public BloodTestGUI() {
+      myBloodTest = new BloodTestQueue();
         initComponents();
     }
 
@@ -45,6 +49,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
         messageTA = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         hospitalCB = new javax.swing.JCheckBox();
+        clearBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,6 +150,14 @@ public class BloodTestGUI extends javax.swing.JFrame {
             }
         });
 
+        clearBtn.setFont(new java.awt.Font("Segoe UI Variable", 1, 18)); // NOI18N
+        clearBtn.setText("CLEAR");
+        clearBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -156,16 +169,13 @@ public class BloodTestGUI extends javax.swing.JFrame {
                         .addComponent(jLabel6))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(gpLB, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(hospitalLB)
-                            .addComponent(ageLB, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(priorityLB, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nameLB, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addComponent(addBtn)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(gpLB, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(hospitalLB)
+                                    .addComponent(ageLB, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(priorityLB, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(nameLB, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(44, 44, 44)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,12 +183,15 @@ public class BloodTestGUI extends javax.swing.JFrame {
                                         .addComponent(nameTF, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(ageTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(gpTF, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(hospitalCB, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(38, 38, 38))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(hospitalCB, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(addBtn)
+                                .addGap(27, 27, 27)
                                 .addComponent(deleteBtn)
-                                .addGap(83, 83, 83)))
+                                .addGap(26, 26, 26)
+                                .addComponent(clearBtn)))
+                        .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,7 +249,8 @@ public class BloodTestGUI extends javax.swing.JFrame {
                     .addComponent(addBtn)
                     .addComponent(deleteBtn)
                     .addComponent(notShowUpBtn)
-                    .addComponent(exitBtn))
+                    .addComponent(exitBtn)
+                    .addComponent(clearBtn))
                 .addContainerGap(53, Short.MAX_VALUE))
         );
 
@@ -247,8 +261,29 @@ public class BloodTestGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_hospitalCBActionPerformed
 
+    
+  
+    
+    
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
+        
+        People people = new People();
+        people.setName(nameTF.getText());
+        people.setPriority(priorityTF.getText());
+        int age = Integer.parseInt(ageTF.getText());
+        
+        people.setGpDetails(gpTF.getText());
+        boolean fromHospitalWard = hospitalCB.isSelected();
+        people.setFromHospitalWard(fromHospitalWard);
+        
+        //Add the person to the queue 
+        myBloodTest.enqueue(people);
+        clearAll();
+        
+        //Display Person Added success message
+        messageTA.setText("Person added to the queue: \n" +people);
+        
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
@@ -275,6 +310,26 @@ public class BloodTestGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_messageTAAncestorAdded
 
+    private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
+        // TODO add your handling code here:
+        nameTF.setText("");
+        priorityTF.setText("");
+        messageTA.setText("");
+        ageTF.setText("");
+        gpTF.setText("");
+        hospitalCB.setSelected(false);
+    }//GEN-LAST:event_clearBtnActionPerformed
+
+    
+      //clears all the textfields and text area
+        private void clearAll(){
+        nameTF.setText("");
+        priorityTF.setText("");
+        messageTA.setText("");
+        ageTF.setText("");
+        gpTF.setText("");
+        hospitalCB.setSelected(false);
+    }
     /**
      * @param args the command line arguments
      */
@@ -314,6 +369,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
     private javax.swing.JButton addBtn;
     private javax.swing.JLabel ageLB;
     private javax.swing.JTextField ageTF;
+    private javax.swing.JButton clearBtn;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JButton exitBtn;
     private javax.swing.JLabel gpLB;

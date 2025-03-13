@@ -31,18 +31,14 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="gpLB" min="-2" pref="139" max="-2" attributes="0"/>
-                          <Component id="hospitalLB" min="-2" max="-2" attributes="0"/>
-                          <Component id="ageLB" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
-                          <Component id="priorityLB" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
-                          <Component id="nameLB" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                              <Component id="addBtn" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="gpLB" min="-2" pref="139" max="-2" attributes="0"/>
+                                  <Component id="hospitalLB" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ageLB" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
+                                  <Component id="priorityLB" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
+                                  <Component id="nameLB" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
+                              </Group>
                               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -53,14 +49,17 @@
                                   </Group>
                                   <Component id="hospitalCB" min="-2" pref="100" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
+                              <Component id="addBtn" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Component id="deleteBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="clearBtn" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -139,6 +138,7 @@
                   <Component id="deleteBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="notShowUpBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="exitBtn" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="clearBtn" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="53" max="32767" attributes="0"/>
           </Group>
@@ -319,6 +319,17 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="hospitalCBActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="clearBtn">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Segoe UI Variable" size="18" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="CLEAR"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="clearBtnActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
