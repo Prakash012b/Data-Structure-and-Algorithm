@@ -14,11 +14,13 @@ public class BloodTestGUI extends javax.swing.JFrame {
      * Creates new form BloodTestGUI
      */
     
-     private BloodTestQueueInterface myBloodTest;
-     
+     private BloodTestQueueInterface myBloodTest = new BloodTestQueue();
+     private PQInterface myPQinterface;
+     private Scheduler scheduler = new Scheduler();
     public BloodTestGUI() {
-      myBloodTest = new BloodTestQueue();
+ 
         initComponents();
+        
     }
 
     /**
@@ -268,21 +270,30 @@ public class BloodTestGUI extends javax.swing.JFrame {
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         // TODO add your handling code here:
         
-        People people = new People();
-        people.setName(nameTF.getText());
-        people.setPriority(priorityTF.getText());
+        Person newPerson = new Person();
+        newPerson.setName(nameTF.getText());
+        String priority = priorityTF.getText().toLowerCase();  // Convert input to lowercase for consistency
+
+        // Validate priority input
+        if (!priority.equals("urgent") && !priority.equals("medium") && !priority.equals("low")) {
+            System.out.println("Error: Please enter 'urgent', 'medium', or 'low' for priority.");
+            return;  // Stop execution if input is invalid
+        }
+
+        newPerson.setPriority(priority);
         int age = Integer.parseInt(ageTF.getText());
         
-        people.setGpDetails(gpTF.getText());
+        newPerson.setGpDetails(gpTF.getText());
         boolean fromHospitalWard = hospitalCB.isSelected();
-        people.setFromHospitalWard(fromHospitalWard);
+        newPerson.setFromHospitalWard(fromHospitalWard);
         
         //Add the person to the queue 
-        myBloodTest.enqueue(people);
+        scheduler.addPerson(newPerson);
+        System.out.println("Selected priority: " + priority);
         clearAll();
         
         //Display Person Added success message
-        messageTA.setText("Person added to the queue: \n" +people);
+        messageTA.append("Person added to the queue: \n" +newPerson);
         
     }//GEN-LAST:event_addBtnActionPerformed
 
@@ -296,6 +307,8 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
     private void viewQueueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewQueueBtnActionPerformed
         // TODO add your handling code here:
+  
+        
     }//GEN-LAST:event_viewQueueBtnActionPerformed
 
     private void notShowUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notShowUpBtnActionPerformed
@@ -313,8 +326,8 @@ public class BloodTestGUI extends javax.swing.JFrame {
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         // TODO add your handling code here:
         nameTF.setText("");
-        priorityTF.setText("");
         messageTA.setText("");
+        priorityTF.setText("");
         ageTF.setText("");
         gpTF.setText("");
         hospitalCB.setSelected(false);
@@ -324,12 +337,15 @@ public class BloodTestGUI extends javax.swing.JFrame {
       //clears all the textfields and text area
         private void clearAll(){
         nameTF.setText("");
-        priorityTF.setText("");
         messageTA.setText("");
+        priorityTF.setText("");
         ageTF.setText("");
         gpTF.setText("");
         hospitalCB.setSelected(false);
     }
+        
+ 
+  
     /**
      * @param args the command line arguments
      */

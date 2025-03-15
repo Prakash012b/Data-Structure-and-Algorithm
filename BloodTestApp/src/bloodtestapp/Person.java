@@ -8,7 +8,7 @@ package bloodtestapp;
  *
  * @author pyaku
  */
-public class People {
+public class Person implements Comparable<Person>{
     
     private String name;
     private String priority;
@@ -17,13 +17,13 @@ public class People {
     private boolean fromHospitalWard;
 
    
-    public People(){
+    public Person(){
 
     }
     
     
     //Constructors
-    public People(String name, String priority, int age, String gpDetails, boolean fromHospitalWard) {
+    public Person(String name, String priority, int age, String gpDetails, boolean fromHospitalWard) {
         this.name = name;
         this.priority = priority;
         this.age = age;
@@ -75,6 +75,25 @@ public class People {
     public boolean isFromHospitalWard() {
         return fromHospitalWard;
     }
+    
+    @Override
+      public int compareTo(Person other) {
+        int priorityOrder = getPriorityValue(this.priority) - getPriorityValue(other.priority);
+        if (priorityOrder == 0) {
+          return Integer.compare(other.age, this.age);
+           }
+        return priorityOrder;
+      
+    }
+
+        private int getPriorityValue(String priority) {
+          switch (priority.toLowerCase()) {
+            case "urgent": return 1;
+            case "medium": return 2;
+            case "low": return 3;
+            default: return Integer.MAX_VALUE;
+        }
+          }
 
     @Override
     public String toString() {

@@ -17,12 +17,13 @@ public interface BloodTestQueueInterface {
     //Returns the size of the queue
     public int size();
 
-    //Return the people front in queue without removing them from queue
-    public Object frontElement();
-
     //Adds people to the queue
-    public void enqueue(Object element);
+    public void enqueue(Person element);
 
     //Removes the people from the front of the queue
-    public Object dequeue();
+    public Person dequeue();
+ 
+    //Displays the queue
+    public void displayQueue();
+
 }
