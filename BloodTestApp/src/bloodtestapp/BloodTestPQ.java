@@ -32,7 +32,7 @@ public class BloodTestPQ implements PQInterface{
         return thePQueue.size();
     }
 
-   ///Add the  new person to the priority queue
+   //Add the  new person to tshe priority queue
     public void enqueue(Person item) {
       thePQueue.add(item);
     }

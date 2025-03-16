@@ -14,11 +14,12 @@ public class BloodTestGUI extends javax.swing.JFrame {
      * Creates new form BloodTestGUI
      */
     
-     private BloodTestQueueInterface myBloodTest = new BloodTestQueue();
+     private BloodTestQueueInterface myBloodTest;
      private PQInterface myPQinterface;
-     private Scheduler scheduler = new Scheduler();
+     private Scheduler scheduler;
     public BloodTestGUI() {
- 
+        myBloodTest = new BloodTestQueue(); //Initilize bloodtestqueue
+        scheduler = new Scheduler(); //Initilize the scheduler
         initComponents();
         
     }
@@ -47,11 +48,11 @@ public class BloodTestGUI extends javax.swing.JFrame {
         viewQueueBtn = new javax.swing.JButton();
         notShowUpBtn = new javax.swing.JButton();
         exitBtn = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        messageTA = new javax.swing.JTextArea();
         jLabel6 = new javax.swing.JLabel();
         hospitalCB = new javax.swing.JCheckBox();
         clearBtn = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        messageTA = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -127,20 +128,6 @@ public class BloodTestGUI extends javax.swing.JFrame {
             }
         });
 
-        messageTA.setColumns(20);
-        messageTA.setFont(new java.awt.Font("Segoe UI Variable", 0, 14)); // NOI18N
-        messageTA.setRows(5);
-        messageTA.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                messageTAAncestorAdded(evt);
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jScrollPane1.setViewportView(messageTA);
-
         jLabel6.setFont(new java.awt.Font("Segoe UI Variable", 1, 24)); // NOI18N
         jLabel6.setText("BLOOD TEST SCHEDULER APP");
 
@@ -159,6 +146,10 @@ public class BloodTestGUI extends javax.swing.JFrame {
                 clearBtnActionPerformed(evt);
             }
         });
+
+        messageTA.setColumns(20);
+        messageTA.setRows(5);
+        jScrollPane2.setViewportView(messageTA);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -195,18 +186,18 @@ public class BloodTestGUI extends javax.swing.JFrame {
                                 .addComponent(clearBtn)))
                         .addGap(38, 38, 38)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(nextPersonBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(viewQueueBtn))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(notShowUpBtn)
                                         .addGap(28, 28, 28)
                                         .addComponent(exitBtn))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(61, 61, 61))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(nextPersonBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(viewQueueBtn)))))
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(51, 51, 51)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -217,8 +208,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(133, 133, 133)
                         .addComponent(gpLB))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -233,7 +223,8 @@ public class BloodTestGUI extends javax.swing.JFrame {
                             .addComponent(ageLB)
                             .addComponent(ageTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(gpTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(gpTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(15, 15, 15)
@@ -281,7 +272,8 @@ public class BloodTestGUI extends javax.swing.JFrame {
         }
 
         newPerson.setPriority(priority);
-        int age = Integer.parseInt(ageTF.getText());
+        int age = Integer.parseInt(ageTF.getText());// parsing the age from the textfield
+        newPerson.setAge(age); //setting the age in the person object
         
         newPerson.setGpDetails(gpTF.getText());
         boolean fromHospitalWard = hospitalCB.isSelected();
@@ -303,12 +295,24 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
     private void nextPersonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextPersonBtnActionPerformed
         // TODO add your handling code here:
+        
+        Person next = scheduler.getNextPerson();
+        if (next != null) {
+            messageTA.setText("Next Person: " + next);
+        } else {
+            messageTA.setText("No one in the queue.");
+        }
     }//GEN-LAST:event_nextPersonBtnActionPerformed
 
     private void viewQueueBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewQueueBtnActionPerformed
         // TODO add your handling code here:
-  
         
+        //Display the queue
+        if (scheduler !=null){ //This checks if the scheduler is initilized
+            messageTA.setText(scheduler.getQueue().toString());  
+        } else {
+            messageTA.setText("Error: Scheduler is not initilized");
+        }
     }//GEN-LAST:event_viewQueueBtnActionPerformed
 
     private void notShowUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notShowUpBtnActionPerformed
@@ -317,11 +321,8 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_exitBtnActionPerformed
-
-    private void messageTAAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_messageTAAncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_messageTAAncestorAdded
 
     private void clearBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearBtnActionPerformed
         // TODO add your handling code here:
@@ -393,7 +394,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
     private javax.swing.JCheckBox hospitalCB;
     private javax.swing.JLabel hospitalLB;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea messageTA;
     private javax.swing.JLabel nameLB;
     private javax.swing.JTextField nameTF;

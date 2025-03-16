@@ -10,12 +10,19 @@ package bloodtestapp;
  */
 public interface SchedulerInterface {
     
+    //Adds a person to both normal and priority  queue
     public void addPerson(Person p);
     
-    public Person getNextPerson();
     
+    //Retrives and removes the next person from the priority queue
+    public Person getNextPerson(); // The person with highest priority is returned
+    
+    
+    //Removes a person from the normal queue by name
     public boolean removePerson(String name);
     
+    
+    //Display sthe current queue and returns its formatted string representation
     public String viewQueue();
     
     

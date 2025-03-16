@@ -13,15 +13,22 @@ public class Scheduler implements SchedulerInterface {
     private BloodTestQueue queue = new BloodTestQueue();
     
     
+    //Getter for the queue 
+    public BloodTestQueue getQueue() {
+    return queue;
+}
+    
+    
+    
     @Override
     public void addPerson(Person p) {
-        priorityQueue.enqueue(p);
-        queue.enqueue(p);
+        priorityQueue.enqueue(p); // To add person to priority queue
+        queue.enqueue(p); // To add person to normal queue
     }
 
     @Override
     public Person getNextPerson() {
-        return priorityQueue.dequeue();
+        return priorityQueue.dequeue(); // It removes person based on priority
     }
 
     @Override
@@ -29,26 +36,28 @@ public class Scheduler implements SchedulerInterface {
         BloodTestQueue tempQueue = new BloodTestQueue();
         boolean found = false;
 
+        //While loop to run through queue to find and remove the  person
         while (!queue.isEmpty()) {
             Person p = queue.dequeue();
             if (p.getName().equalsIgnoreCase(name)) {
-                found = true;
+                found = true; //marks found and skips adding back
             } else {
                 tempQueue.enqueue(p);
             }
         }
 
+        // While loop to restore the queue without removed person
         while (!tempQueue.isEmpty()) {
             queue.enqueue(tempQueue.dequeue());
         }
 
-        return found;
+        return found; //It returns true if th eperson was found and removed
     }
 
 
     @Override
     public String viewQueue() {
-        queue.displayQueue();
-        return queue.toString();
+        queue.displayQueue(); // Prints queue to the console
+        return queue.toString(); // Returns formatted queue String
     }
 }
