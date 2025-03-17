@@ -56,6 +56,14 @@ public class BloodTestQueue implements BloodTestQueueInterface {
       }
     
 
+        // Recursive method to display the queue
+    private void displayQueueRecursive(int index) {
+        if (index >= theQueue.size()) {
+            return; // Stop when we reach the end of the queue
+        }
+        System.out.println(theQueue.get(index)); // Print current person
+        displayQueueRecursive(index + 1); // Recursive call for the next person
+    }
     
         @Override
     public void displayQueue() {
@@ -65,11 +73,11 @@ public class BloodTestQueue implements BloodTestQueueInterface {
         System.out.println("Queue is empty.");
     } else {
         System.out.println("Current Queue:");
-        for (Person p : theQueue) {  // Loop through the queue and prints each person's details
-            System.out.println(p);   // Calls Person's toString() method of person class
-        }
+        displayQueueRecursive(0);//Start recursion from the first person
+        
     }
 }
+    
     
         @Override
     public String toString() {
@@ -90,7 +98,10 @@ public class BloodTestQueue implements BloodTestQueueInterface {
         return sb.toString();
     }
 
-
+    public void removePersonFromQueue(Person person) {
+        theQueue.removeIf(p -> p.equals(person));
+    }
+    
     //Getter method to return the queue (for external access)
     public LinkedList<Person> getQueue() {
         return theQueue;

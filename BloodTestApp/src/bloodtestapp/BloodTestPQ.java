@@ -52,4 +52,9 @@ public class BloodTestPQ implements PQInterface{
   public void displayQueue(){
       System.out.println("Priority Queue: " + thePQueue);
   } 
+  
+      public void removePersonFromPQ(Person person) {
+        thePQueue.remove(person);
+    }
+      
 }

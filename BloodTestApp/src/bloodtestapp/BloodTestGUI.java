@@ -16,10 +16,12 @@ public class BloodTestGUI extends javax.swing.JFrame {
     
      private BloodTestQueueInterface myBloodTest;
      private PQInterface myPQinterface;
+     private StackInterface mystackinterface;
      private Scheduler scheduler;
     public BloodTestGUI() {
         myBloodTest = new BloodTestQueue(); //Initilize bloodtestqueue
         scheduler = new Scheduler(); //Initilize the scheduler
+        mystackinterface = new NotShownStack(); //Initialize the stack
         initComponents();
         
     }
@@ -291,11 +293,48 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
+        
+        // Get name from text field
+        String nameToDelete = nameTF.getText().trim(); 
+
+        
+        //checks if the namefield is empty
+        if (!nameToDelete.isEmpty()) {
+        //calls the removedPerson method in scheduler to delete the person
+        boolean deleted = scheduler.removePerson(nameToDelete);
+
+        
+        //checks if the person was sucessfully deleted
+        if (deleted) {
+            System.out.println(nameToDelete + " was removed and added to Not Shown stack.");
+        } else {
+            System.out.println("Error: Person not found in queue.");
+            }
+         } else {
+                //if the name is empty, remove the next person in the queue
+                Person nextPerson = scheduler.getNextPerson();
+                if (nextPerson != null){
+                scheduler.NotShown(nextPerson); //Add to Not Shown Stack
+                System.out.println(nextPerson.getName() + " was removed and added to the Not Shown Up stack .");
+                } else {
+                System.out.println (" Error : No person left i the queue.");
+          }
+               
+    }
+        
+
+        nameTF.setText(""); // Clear the name field after deleting
+        
+        if (nameToDelete.isEmpty()) {
+            System.out.println("Error: Please enter a name to delete.");
+        }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
     private void nextPersonBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextPersonBtnActionPerformed
         // TODO add your handling code here:
         
+        
+        //Get and display the next person in the queue from Scheduler
         Person next = scheduler.getNextPerson();
         if (next != null) {
             messageTA.setText("Next Person: " + next);
@@ -317,6 +356,11 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
     private void notShowUpBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_notShowUpBtnActionPerformed
         // TODO add your handling code here:
+        String notShownList = scheduler.viewNotShown();
+        
+        //Displays a message in text area
+        messageTA.setText(notShownList);
+        System.out.println(notShownList);
     }//GEN-LAST:event_notShowUpBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed

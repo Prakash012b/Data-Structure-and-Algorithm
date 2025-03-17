@@ -21,9 +21,14 @@ public interface SchedulerInterface {
     //Removes a person from the normal queue by name
     public boolean removePerson(String name);
     
+    //Shows the person that have not shown
+    public void NotShown(Person p);
     
     //Display sthe current queue and returns its formatted string representation
     public String viewQueue();
+    
+    //Display the People not shown from the stack
+    public String viewNotShown();
     
     
     
