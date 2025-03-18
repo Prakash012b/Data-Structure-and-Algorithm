@@ -98,6 +98,7 @@ public class BloodTestQueue implements BloodTestQueueInterface {
         return sb.toString();
     }
 
+    @Override
     public void removePersonFromQueue(Person person) {
         theQueue.removeIf(p -> p.equals(person));
     }

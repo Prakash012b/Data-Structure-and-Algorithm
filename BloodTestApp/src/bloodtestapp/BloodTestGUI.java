@@ -4,6 +4,8 @@
  */
 package bloodtestapp;
 
+import javax.swing.*;
+
 /**
  *
  * @author pyaku
@@ -18,10 +20,12 @@ public class BloodTestGUI extends javax.swing.JFrame {
      private PQInterface myPQinterface;
      private StackInterface mystackinterface;
      private Scheduler scheduler;
+     private JTextArea queueDisplay;
     public BloodTestGUI() {
         myBloodTest = new BloodTestQueue(); //Initilize bloodtestqueue
         scheduler = new Scheduler(); //Initilize the scheduler
         mystackinterface = new NotShownStack(); //Initialize the stack
+        queueDisplay = new JTextArea();
         initComponents();
         
     }
@@ -149,6 +153,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
             }
         });
 
+        messageTA.setEditable(false);
         messageTA.setColumns(20);
         messageTA.setRows(5);
         jScrollPane2.setViewportView(messageTA);
@@ -269,7 +274,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
 
         // Validate priority input
         if (!priority.equals("urgent") && !priority.equals("medium") && !priority.equals("low")) {
-            System.out.println("Error: Please enter 'urgent', 'medium', or 'low' for priority.");
+            messageTA.append("Error: Please enter 'urgent', 'medium', or 'low' for priority.");
             return;  // Stop execution if input is invalid
         }
 
@@ -283,20 +288,21 @@ public class BloodTestGUI extends javax.swing.JFrame {
         
         //Add the person to the queue 
         scheduler.addPerson(newPerson);
-        System.out.println("Selected priority: " + priority);
+        messageTA.append("Selected priority: " + priority);
         clearAll();
         
         //Display Person Added success message
         messageTA.append("Person added to the queue: \n" +newPerson);
-        
+        updateQueueDisplay();  // Update the normal queue display
     }//GEN-LAST:event_addBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         // TODO add your handling code here:
         
         // Get name from text field
-        String nameToDelete = nameTF.getText().trim(); 
-
+        String nameToDelete = nameTF.getText().trim();
+        // Get currently displayed person
+        String displayedPerson = messageTA.getText().replace("Next Person: ", "").trim();
         
         //checks if the namefield is empty
         if (!nameToDelete.isEmpty()) {
@@ -306,27 +312,36 @@ public class BloodTestGUI extends javax.swing.JFrame {
         
         //checks if the person was sucessfully deleted
         if (deleted) {
-            System.out.println(nameToDelete + " was removed and added to Not Shown stack.");
+            messageTA.append(nameToDelete +  " \n was removed and added to Not Shown stack.");
         } else {
-            System.out.println("Error: Person not found in queue.");
+            messageTA.append("Error: Person not found in queue.");
             }
-         } else {
+         } 
+        /*else if (!displayedPerson.startsWith("Next person: ")) {
+                // Extract the name from the displayed "Next Person"
+        String displayedPersonName = displayedPerson.replace("Next Person: ", "").trim();
+
                 //if the name is empty, remove the next person in the queue
-                Person nextPerson = scheduler.getNextPerson();
-                if (nextPerson != null){
-                scheduler.NotShown(nextPerson); //Add to Not Shown Stack
-                System.out.println(nextPerson.getName() + " was removed and added to the Not Shown Up stack .");
-                } else {
-                System.out.println (" Error : No person left i the queue.");
+                Person personToDelete = scheduler.findPerson(displayedPersonName);
+                if (personToDelete != null){
+                scheduler.NotShown(personToDelete); //Add to Not Shown Stack
+                scheduler.removePerson(personToDelete.getName()); //Remove from queue
+                messageTA.append(personToDelete.getName() + "\n  was removed and added to the Not Shown Up stack .");
+                } else {    
+                  messageTA.append("No Person left in the queue:");  
+               
           }
                
     }
+        */
         
 
         nameTF.setText(""); // Clear the name field after deleting
+        updateQueueDisplay();  // Update the normal queue display
+        
         
         if (nameToDelete.isEmpty()) {
-            System.out.println("Error: Please enter a name to delete.");
+            messageTA.append("Error: Please enter a name to delete."); 
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
@@ -340,6 +355,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
             messageTA.setText("Next Person: " + next);
         } else {
             messageTA.setText("No one in the queue.");
+            updateQueueDisplay();  // Update the normal queue display
         }
     }//GEN-LAST:event_nextPersonBtnActionPerformed
 
@@ -389,6 +405,10 @@ public class BloodTestGUI extends javax.swing.JFrame {
         hospitalCB.setSelected(false);
     }
         
+        // Updates the queue display on the GUI
+        private void updateQueueDisplay() {
+            queueDisplay.setText(scheduler.viewQueue());
+        }
  
   
     /**

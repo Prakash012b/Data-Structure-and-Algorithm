@@ -30,6 +30,8 @@ public interface SchedulerInterface {
     //Display the People not shown from the stack
     public String viewNotShown();
     
+     public BloodTestQueue getQueue();
+    
     
     
     

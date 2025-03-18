@@ -25,4 +25,7 @@ public interface PQInterface {
      //Return the person with highest priority without removing it
     public void displayQueue();
     
+    
+    public void removePersonFromPQ(Person person);
+    
 }

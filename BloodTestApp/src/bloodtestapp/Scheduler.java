@@ -112,5 +112,15 @@ public class Scheduler implements SchedulerInterface {
     public BloodTestQueue getQueue() {
     return queue;
 }
+    
+    //find the person based on their name neede for deletion from TextArea
+    public Person findPerson(String name) {
+    for (Person p : queue.getQueue()) {
+        if (p.getName().equalsIgnoreCase(name)) {
+            return p;
+        }
+    }
+    return null;
+}
 
 }

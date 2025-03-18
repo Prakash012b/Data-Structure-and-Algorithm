@@ -25,5 +25,7 @@ public interface BloodTestQueueInterface {
  
     //Displays the queue
     public void displayQueue();
+    
+   public void removePersonFromQueue(Person person);
 
 }
