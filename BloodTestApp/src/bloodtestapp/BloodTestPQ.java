@@ -20,25 +20,28 @@ public class BloodTestPQ implements PQInterface{
         thePQueue = new PriorityQueue<>();
     }
 
+    
+    @Override
     // checks the PQ is empty 
     //Return True if the priority queue is empty, false otherwise
     public boolean isEmpty() {
         return thePQueue.isEmpty();
     }
 
-    
+    @Override
     //Returns the number of people in the PQ and returns the size of the PQ
     public int size() {
         return thePQueue.size();
     }
 
+    @Override
    //Add the  new person to tshe priority queue
     public void enqueue(Person item) {
       thePQueue.add(item);
     }
 
     
-
+    @Override
     //removes and returns the person which has the highest priority
     public Person dequeue() {
         if (isEmpty()){
@@ -48,11 +51,14 @@ public class BloodTestPQ implements PQInterface{
     }
 
     
+    @Override
     //Return the person with highest priority without removing it
   public void displayQueue(){
       System.out.println("Priority Queue: " + thePQueue);
   } 
   
+  
+  @Override
    public void removePersonFromPQ(Person person) {
         thePQueue.remove(person);
     }

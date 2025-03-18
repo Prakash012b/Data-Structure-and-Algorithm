@@ -22,6 +22,10 @@ public interface BloodTestQueueInterface {
 
     //Removes the people from the front of the queue
     public Person dequeue();
+    
+    
+    //Gets the final queue as representation as a String
+    public String toString();
  
     //Displays the queue
     public void displayQueue();

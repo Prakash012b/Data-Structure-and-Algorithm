@@ -312,29 +312,12 @@ public class BloodTestGUI extends javax.swing.JFrame {
         
         //checks if the person was sucessfully deleted
         if (deleted) {
-            messageTA.append(nameToDelete +  " \n was removed and added to Not Shown stack.");
+            messageTA.append(nameToDelete +  " was removed and added to Not Shown stack. \n");
         } else {
             messageTA.append("Error: Person not found in queue.");
             }
          } 
-        /*else if (!displayedPerson.startsWith("Next person: ")) {
-                // Extract the name from the displayed "Next Person"
-        String displayedPersonName = displayedPerson.replace("Next Person: ", "").trim();
-
-                //if the name is empty, remove the next person in the queue
-                Person personToDelete = scheduler.findPerson(displayedPersonName);
-                if (personToDelete != null){
-                scheduler.NotShown(personToDelete); //Add to Not Shown Stack
-                scheduler.removePerson(personToDelete.getName()); //Remove from queue
-                messageTA.append(personToDelete.getName() + "\n  was removed and added to the Not Shown Up stack .");
-                } else {    
-                  messageTA.append("No Person left in the queue:");  
-               
-          }
-               
-    }
-        */
-        
+          
 
         nameTF.setText(""); // Clear the name field after deleting
         updateQueueDisplay();  // Update the normal queue display
@@ -376,7 +359,7 @@ public class BloodTestGUI extends javax.swing.JFrame {
         
         //Displays a message in text area
         messageTA.setText(notShownList);
-        System.out.println(notShownList);
+        messageTA.append(notShownList);
     }//GEN-LAST:event_notShowUpBtnActionPerformed
 
     private void exitBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitBtnActionPerformed

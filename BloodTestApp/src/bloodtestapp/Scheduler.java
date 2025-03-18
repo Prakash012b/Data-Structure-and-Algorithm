@@ -34,26 +34,6 @@ public class Scheduler implements SchedulerInterface {
         return nextPerson;
     }
     
-    /*
-    // Removes the person from the normal queue
-        private void removePersonFromQueue(Person p) {
-        BloodTestQueue tempQueue = new BloodTestQueue();
-        while (!queue.isEmpty()) {
-            Person person = queue.dequeue();
-            if (!person.equals(p)) {
-                tempQueue.enqueue(person);
-            }
-        }
-
-        // Restore the updated queue
-        while (!tempQueue.isEmpty()) {
-            queue.enqueue(tempQueue.dequeue());
-        }
-    }
-
-*/
-    
-    
     
     @Override
     public boolean removePerson(String name) {
@@ -108,11 +88,14 @@ public class Scheduler implements SchedulerInterface {
         return stack.viewNotShown();
     }
 
+  
+  @Override
     //Getter for the queue 
     public BloodTestQueue getQueue() {
     return queue;
 }
     
+    @Override
     //find the person based on their name neede for deletion from TextArea
     public Person findPerson(String name) {
     for (Person p : queue.getQueue()) {

@@ -31,6 +31,8 @@ public interface SchedulerInterface {
     public String viewNotShown();
     
      public BloodTestQueue getQueue();
+     
+      public Person findPerson(String name);
     
     
     
